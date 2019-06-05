@@ -2,6 +2,8 @@ import java.util.*;
 import java.lang.*;
 
 public class Player {
+    public static final int CHANCES = 10;
+
     private Word wordToGuess;
     private int numOfGuesses;
     private int numOfCoveredLetters;
@@ -11,7 +13,7 @@ public class Player {
     private final List<String> alphabet = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", 
                                                         "m", "n", "o", "p", "r", "s", "t", "u", "v", "w", "q", "x", "y", "z",
                                                         "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", 
-                                                        "M", "N", "O", "P", "R", "S", "T", "U", "V", "W", "Q", "X", "Y", "Z");
+                                                        "M", "N", "O", "P", "R", "S", "T", "U", "V", "W", "Q", "X", "Y", "Z", " ");
 
 
     public Player(String wordAndClue) {
@@ -25,7 +27,7 @@ public class Player {
         return this.wordToGuess;
     }
 
-    public int getnumOfGuesses() {
+    public int getNumOfGuesses() {
         return this.numOfGuesses;
     }
 
@@ -35,6 +37,10 @@ public class Player {
 
     public void setGuessedLetters(List<String> letters) {
         this.guessedLetters = letters;
+    }
+
+    public int getNumOfGuessesForDisplay() {
+        return this.numOfGuesses + 1;
     }
 
     public void addGuessedLetter(String letter) {
@@ -80,11 +86,11 @@ public class Player {
     }
      
     public boolean hasGuessesLeft() {
-        return this.numOfGuesses < this.wordToGuess.getLength();
+        return this.numOfGuesses < CHANCES;
     }
 
     public void printClue(){
-        if (this.numOfGuesses == (this.wordToGuess.getLength() - 1)) {
+        if (this.numOfGuesses == (CHANCES - 1)) {
             System.out.println("\n\tCapital of: " + this.wordToGuess.getClue());
         } else {
             return;
@@ -105,10 +111,8 @@ public class Player {
     public void countCoveredLetters() {
         this.numOfCoveredLetters = 0;
         for (String letter: this.wordToGuess.getLetters()) {
-            if (isInGuessedLetters(letter)) {
-                continue;
-            } else {
-                numOfCoveredLetters++;
+            if (!isInGuessedLetters(letter)) {
+                 numOfCoveredLetters++; 
             }
         }
         System.out.print("\n");
@@ -118,9 +122,7 @@ public class Player {
         for (String correctLetter: this.wordToGuess.getLetters()) {
             if (letter.equals(correctLetter)) {
                 return true;
-            } else {
-                continue;
-            }
+            } 
         }
         return false;
     }
@@ -129,8 +131,6 @@ public class Player {
         for (String correctLetter: this.guessedLetters) {
             if (letter.equals(correctLetter)) {
                 return true;
-            } else {
-                continue;
             }
         }
         return false;

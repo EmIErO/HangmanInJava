@@ -2,6 +2,7 @@ import java.util.*;
 import java.lang.*;
 
 public class Hangman {
+    public static final String FILE = "countries_and_capitals.txt";
 
     private WordsToGuess wordsToGuess;
     private Player player;
@@ -10,7 +11,7 @@ public class Hangman {
     private boolean isRunning;
 
     public static void main(String[] args) {
-        Hangman hangman = new Hangman("countries_and_capitals.txt");
+        Hangman hangman = new Hangman(FILE);
         hangman.run();
     }
 
@@ -49,9 +50,11 @@ public class Hangman {
         this.player.markWhiteSpaces();
         while (player.hasGuessesLeft() && (player.getNumOfCoveredLetters() != 0)) {
 
-            System.out.println("Cheat: " + player.getWordToGuess().getWord());
+            // System.out.println("Cheat: " + player.getWordToGuess().getWord());    //cheat for testing matters
+            // System.out.println(player.getWordToGuess().getLetters());
 
             player.printWordToGuess();
+            System.out.println("This is youre " + player.getNumOfGuessesForDisplay() + " guess out of " + Player.CHANCES + ".");
             System.out.println("\nInsert letter/word: \n");
             updateWordToGuess(this.input.getReader().nextLine());
             player.printClue();
